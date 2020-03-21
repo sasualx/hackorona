@@ -1,5 +1,5 @@
 {
-  "name": "polina-korobkova",
+  "name": "hackorona",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sasualx/polina-korobkova.git"
+    "url": "git+https://github.com/sasualx/hackorona"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sasualx/polina-korobkova/issues"
+    "url": "https://github.com/sasualx/hackorona/issues"
   },
-  "homepage": "https://github.com/sasualx/polina-korobkova#readme",
+  "homepage": "https://github.com/sasualx/hackorona#readme",
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
