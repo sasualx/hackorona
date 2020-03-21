@@ -1,3 +1,8 @@
-from django.contrib import admin
+from __future__ import absolute_import
 
-# Register your models here.
+from django.contrib import admin
+from website.food.models import Food
+
+@admin.register(Food)
+class PostAdmin(admin.ModelAdmin):
+    pass
