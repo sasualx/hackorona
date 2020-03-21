@@ -20,4 +20,4 @@ then you need to run these 2 in parralel in a terminal:
 
 `python manage.py runserver`
 
-and then you can see your beautiful website at localhost:8000
+and then you can see your beautiful website at http://127.0.0.1:8000/
