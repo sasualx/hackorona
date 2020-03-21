@@ -7,7 +7,7 @@ then run the following commands to set it up (you need to have python 3, virtual
 `virtualenv env`
 `. env/bin/activate`
 `pip3 install -r requirements.txt`
-`npm i`
+`npm install package.json`
 
 then you need to run these 2 in parralel in a terminal:
 
