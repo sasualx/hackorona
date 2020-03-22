@@ -15,6 +15,7 @@ class Food(models.Model):
 
     UNIT = 'unit(s)'
     BAG = 'bag(s)'
+    BOTTLE = 'bottle(s)'
     BOX = 'box(s)'
     CAN = 'can(s)'
     CARTON = 'carton(s)'
@@ -27,6 +28,7 @@ class Food(models.Model):
     UNIT_CHOICES = [
         (UNIT, 'UN'),
         (BAG, 'BG'),
+        (BOTTLE, 'BT'),
         (BOX, 'BX'),
         (CAN, 'CN'),
         (CARTON, 'CA'),

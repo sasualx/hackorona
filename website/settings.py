@@ -131,8 +131,13 @@ USE_TZ = True
 
 STATIC_URL = os.path.join(BASE_DIR, '/static/')
 
-STATIC_ROOT = os.path.join(BASE_DIR, '/assets/')
+# STATIC_ROOT = os.path.join(BASE_DIR, '/static_root/')
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'main_page'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "assets"),
 ]

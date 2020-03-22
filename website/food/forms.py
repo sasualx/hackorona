@@ -11,6 +11,7 @@ FRESHNESS_CHOICES = [
 
 UNIT = 'unit(s)'
 BAG = 'bag(s)'
+BOTTLE = 'bottle(s)'
 BOX = 'box(s)'
 CAN = 'can(s)'
 CARTON = 'carton(s)'
@@ -23,6 +24,7 @@ LITER = 'liter(s)'
 UNIT_CHOICES = [
     (UNIT, 'unit'),
     (BAG, 'bag'),
+    (BOTTLE, 'bottle'),
     (BOX, 'box'),
     (CAN, 'can'),
     (CARTON, 'carton'),
@@ -37,43 +39,30 @@ UNIT_CHOICES = [
 class FoodForm(forms.Form):  
 
     name = forms.CharField(
-        # required=True,
         max_length=30
         )
     number = forms.DecimalField(
-        # required=True,
         max_digits=5, 
         decimal_places=2
         )
     unit = forms.ChoiceField(
-        # required=True,
         choices=UNIT_CHOICES,
-        # default=UNIT
         )
     date_purchased = forms.DateField(
         input_formats=['%Y-%m-%d'],
-        # attrs={'id': 'date_purchased'}
-        # widget=FengyuanChenDatePickerInput()
+        initial=now(),
         )
         
     date_expiry = forms.DateField(
         input_formats=['%Y-%m-%d'],
-        # attrs={'id': 'date_expiry'}
-        # required=False,
-        # auto_now=False, 
-        # auto_now_add=False,
-        # default=now()+timedelta(days=30),
+        initial=now()+timedelta(days=30),
         )
     status = forms.ChoiceField(
-        # required=True,
         choices=FRESHNESS_CHOICES,
-        # default=FRESH,
+        initial=FRESH
         )
     use_before = forms.DateField(
         input_formats=['%Y-%m-%d'],
-        # attrs={'id': 'use_before'}
-        # required=False,
-        # auto_now=False, 
-        # auto_now_add=False,
-        # default=now()+timedelta(days=7),
+        initial=now()+timedelta(days=7),
         )
+
