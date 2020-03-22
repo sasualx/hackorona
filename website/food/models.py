@@ -4,39 +4,39 @@ from django.utils.timezone import now, timedelta
 
 class Food(models.Model):
 
-    FRESH = 'FR'
-    EXPIRING = 'EX'
+    FRESH = 'Fresh'
+    EXPIRING = 'Expiring'
 
     FRESHNESS_CHOICES = [
-        (FRESH, 'Fresh'),
-        (EXPIRING, 'Expiring soon'),
+        (FRESH, 'FR'),
+        (EXPIRING, 'EX'),
     ]
 
-    UNIT = 'UN'
-    BAG = 'BG'
-    BOX = 'BX'
-    CAN = 'CN'
-    CARTON = 'CA'
-    JAR = 'JR'
-    PACKAGE = 'PK'
-    GRAM = 'GR'
-    KILOGRAM = 'KG'
-    LITER = 'LT'
+    UNIT = 'unit(s)'
+    BAG = 'bag(s)'
+    BOX = 'box(s)'
+    CAN = 'can(s)'
+    CARTON = 'carton(s)'
+    JAR = 'jar(s)'
+    PACKAGE = 'package(s)'
+    GRAM = 'gram(s)'
+    KILOGRAM = 'kilo(s)'
+    LITER = 'liter(s)'
   
     UNIT_CHOICES = [
-        (UNIT, 'unit(s)'),
-        (BAG, 'bag(s)'),
-        (BOX, 'box(es)'),
-        (CAN, 'can(s)'),
-        (CARTON, 'carton(s)'),
-        (JAR, 'jar(s)'),
-        (PACKAGE, 'package(s)'),
-        (GRAM, 'gram(s)'),
-        (KILOGRAM, 'kilogram(s)'),
-        (LITER, 'liter(s)'),
+        (UNIT, 'UN'),
+        (BAG, 'BG'),
+        (BOX, 'BX'),
+        (CAN, 'CN'),
+        (CARTON, 'CA'),
+        (JAR, 'JR'),
+        (PACKAGE, 'PK'),
+        (GRAM, 'GR'),
+        (KILOGRAM, 'KG'),
+        (LITER, 'LT'),
     ]    
 
-    user = models.OneToOneField(User, default=0, on_delete=models.CASCADE)
+    user = models.ManyToManyField(User)
     name = models.CharField(
         max_length=30, 
         blank=True
@@ -47,9 +47,9 @@ class Food(models.Model):
         decimal_places=2
         )
     unit = models.CharField(
-        max_length=2, 
+        max_length=10, 
         choices=UNIT_CHOICES,
-        default=UNIT,
+        default=UNIT
         )
     date_purchased = models.DateField(
         auto_now=False, 
@@ -59,10 +59,10 @@ class Food(models.Model):
     date_expiry = models.DateField(
         auto_now=False, 
         auto_now_add=False,
-        default=now
+        default=now()+timedelta(days=30),
         )
     status = models.CharField(
-        max_length=2,
+        max_length=10,
         choices=FRESHNESS_CHOICES,
         default=FRESH,
         )
