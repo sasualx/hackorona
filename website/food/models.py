@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
+from django.forms import ModelForm
 
 class Food(models.Model):
 
@@ -71,5 +72,6 @@ class Food(models.Model):
         auto_now_add=False,
         default=now()+timedelta(days=7),
         )
+
 
 # Create your models here.
