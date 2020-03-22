@@ -134,7 +134,7 @@
     <div class="w3-row-padding w3-padding-16 w3-center" id="food">     
 
       {% for item in items %}
-        <div class="w3-quarter">
+        <div class="w3-quarter w3-margin-bottom w3-padding">
           {% if item.name == 'Apple' or item.name == 'apple' %}
           <img src='{% static "/apple.jpg" %}' alt='apple' height='200px' />
           {% elif item.name == 'Avocado' or item.name == 'avocado'%}
@@ -200,7 +200,6 @@
     <footer class="w3-row-padding w3-padding-16 w3-center w3-light-grey ">
         <h3>Fridge Manager</h3>
         <p>@WirVsVirus</p>
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p> 
     </footer>
   
   <!-- End page content -->
