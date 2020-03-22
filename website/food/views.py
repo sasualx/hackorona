@@ -12,7 +12,8 @@ class FoodView(TemplateView):
 
     def get(self, request):
         context = {
-            'items': request.user.food_set.all()
+            'items': request.user.food_set.all(),
+            'form':FoodForm()
         }
 
         return render(request, self.template, context)
@@ -31,7 +32,8 @@ class FoodView(TemplateView):
 
         if request.method == 'POST':
             form = FoodForm(form_data)
-            request.user.food_set.create(
+            if form.is_valid():
+                request.user.food_set.create(
                     name=form_data['name'],
                     number=form_data['number'],
                     unit=form_data['unit'],
@@ -41,5 +43,8 @@ class FoodView(TemplateView):
                     use_before=form_data['use_before'],
                     )
 
+        context = {
+            'items': request.user.food_set.all()
+        }
 
-        return render(request, self.template)
+        return render(request, self.template, context)

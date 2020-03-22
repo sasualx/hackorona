@@ -44,15 +44,15 @@ class FoodForm(forms.Form):
         max_digits=5, 
         decimal_places=2
         )
-    unit = forms.Select(
+    unit = forms.ChoiceField(
         # required=True,
         choices=UNIT_CHOICES,
         # default=UNIT
         )
     date_purchased = forms.DateField(
         required=False,
-        # auto_now=False, 
-        # auto_now_add=False, 
+        # auto_now=False,
+        # auto_now_add=False,
         # default=now
         )
     date_expiry = forms.DateField(
@@ -61,7 +61,7 @@ class FoodForm(forms.Form):
         # auto_now_add=False,
         # default=now()+timedelta(days=30),
         )
-    status = forms.Select(
+    status = forms.ChoiceField(
         # required=True,
         choices=FRESHNESS_CHOICES,
         # default=FRESH,

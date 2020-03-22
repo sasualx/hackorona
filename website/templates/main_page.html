@@ -50,36 +50,25 @@
         <form action="" method="post">
           <table>
             <label for="name">Item</label><br>
-            <input type="text" id="name"><br>
+              {{ form.name }}
+              <br/>
             <label for="number">Amount</label><br>
-            <input type="number" id="number">   
-            <select id="unit">
-              <option value="unit" selected>unit(s)</option>
-              <option value="bag">bag(s)</option>
-              <option value="box">box(es)</option>
-              <option value="can">can(s)</option>
-              <option value="carton">carton(s)</option>
-              <option value="jar">jar(s)</option>
-              <option value="package">package(s)</option>
-              <option value="gram">g</option>
-              <option value="kilo">kg</option>
-              <option value="liter">liter(s)</option>   
-            </select><br>
+            {{ form.number }}
+              <br/>
+              {{ form.unit }}
+              <br/>
             <label for="date_purchased">Date purchased</label><br>
-            <input type="date" id="date_purchased"><br>
+            {{form.date_purchased}}
+              <br/>
             <label for="date_expiry">Expiration date</label><br>
-            <input type="date" id="date_expiry"><br>
+            {{form.date_expiry}}
+              <br/>
             <label for="freshness">Freshness status</label>
-            <select id="status">
-              <option value="fresh">Fresh</option>
-              <option value="expiring">Expiring soon</option>
-            </select><br>
+            {{form.status}}
             <label for="use_before">I plan to use it by</label><br>
-            <input type="date" id="use_before"><br>
-            <tr>
-              <td>&nbsp;</td>
-              <td><input type="submit" value="Submit"></td>
-            </tr>
+            {{form.use_before}}
+              <br/>
+              <input type="submit" value="Submit">
           </table>
           {% csrf_token %}
         </form>
