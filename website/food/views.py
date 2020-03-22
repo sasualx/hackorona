@@ -44,7 +44,8 @@ class FoodView(TemplateView):
                     )
 
         context = {
-            'items': request.user.food_set.all()
+            'items': request.user.food_set.all(),
+            'form': FoodForm()
         }
 
         return render(request, self.template, context)

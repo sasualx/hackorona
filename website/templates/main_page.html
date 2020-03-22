@@ -6,6 +6,11 @@
   <head><title>Fridge Manager</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Fengyuan Chen's Datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
     <style>
@@ -18,14 +23,15 @@
 
   <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button">×</a>
-    <a href="#food" onclick="w3_close()" class="w3-bar-item w3-button">Food</a>
-    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
+    <a href="#food" onclick="w3_close()" class="w3-bar-item w3-button">My Food</a>
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About Us</a>
+    <a href ="#add" onclick="w3_close()" class="w3-bar-item w3-button">Add New Items</a>
   </nav>
 
   <div class="w3-top">
     <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
       <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-      <div class="w3-right w3-padding-16">About</div>
+      <div class="w3-right w3-padding-16">About Us</div>
       <div class="w3-center w3-padding-16">Fridge Manager</div>
     </div>
   </div>
@@ -50,25 +56,30 @@
         <form action="" method="post">
           <table>
             <label for="name">Item</label><br>
-              {{ form.name }}
-              <br/>
+            {{ form.name }}
+              <br>
             <label for="number">Amount</label><br>
             {{ form.number }}
-              <br/>
-              {{ form.unit }}
-              <br/>
+            {{ form.unit }}<br>
             <label for="date_purchased">Date purchased</label><br>
-            {{form.date_purchased}}
-              <br/>
+            <div>
+              {{ form.date_purchased }}
+              <!-- {{ form.date_purchased.auto_id }} -->
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
             <label for="date_expiry">Expiration date</label><br>
-            {{form.date_expiry}}
-              <br/>
-            <label for="freshness">Freshness status</label>
-            {{form.status}}
+            <div>
+              {{ form.date_expiry }}<br>
+              <!-- {{ form.date_expiry.auto_id }} -->
+            </div>
+            <label for="freshness">Freshness status</label><br>
+            {{form.status}}<br>
             <label for="use_before">I plan to use it by</label><br>
-            {{form.use_before}}
-              <br/>
-              <input type="submit" value="Submit">
+            {{form.use_before}}<br>
+            <!-- {{ form.use_before.auto_id }} -->
+            <input type="submit" value="Submit">
           </table>
           {% csrf_token %}
         </form>
@@ -88,19 +99,7 @@
           <p>Use before: {{item.use_before}}</p>
         </div>
       {% endfor %}
-     <div class="w3-quarter">
-          <h2>{{item.name}}</h2>
-          <p>{{item.number}} {{item.unit}}</p>
-          <p>Status: {{item.status}}</p>
-          <p>Use before: {{item.use_before}}</p>
-        </div>
     </div>
-    <form action="/your-name/" method="post">
-        <label for="item_name">Item Name: </label>
-        <input id="item_name" type="text" name="item_name">
-        <input id="best_until" type="text" name="best_until">
-        <input type="submit" value="OK">
-    </form>
     
     <!-- Second Photo Grid-->
     <div class="w3-row-padding w3-padding-16 w3-center">
@@ -123,9 +122,9 @@
       <div class="w3-bar">
         <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
         <a href="#" class="w3-bar-item w3-black w3-button">1</a>
-        <!-- <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
         <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a> -->
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
         <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
       </div>
     </div>
@@ -159,6 +158,23 @@
     document.getElementById("mySidebar").style.display = "none";
   }
 
+  $(function () {
+    $("#id_date_purchased").datepicker({
+      format:'yyyy-mm-dd',
+    });
+  });
+
+  $(function () {
+    $("#id_date_expiry").datepicker({
+      format:'yyyy-mm-dd',
+    });
+  });
+
+  $(function () {
+    $("#id_use_before").datepicker({
+      format:'yyyy-mm-dd',
+    });
+  });
 </script>
 
   {% render_bundle 'main' %}

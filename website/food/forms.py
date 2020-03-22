@@ -5,8 +5,8 @@ FRESH = 'Fresh'
 EXPIRING = 'Expiring'
 
 FRESHNESS_CHOICES = [
-    (FRESH, 'FR'),
-    (EXPIRING, 'EX'),
+    (FRESH, 'Fresh'),
+    (EXPIRING, 'Expiring'),
 ]
 
 UNIT = 'unit(s)'
@@ -21,17 +21,18 @@ KILOGRAM = 'kilo(s)'
 LITER = 'liter(s)'
 
 UNIT_CHOICES = [
-    (UNIT, 'UN'),
-    (BAG, 'BG'),
-    (BOX, 'BX'),
-    (CAN, 'CN'),
-    (CARTON, 'CA'),
-    (JAR, 'JR'),
-    (PACKAGE, 'PK'),
-    (GRAM, 'GR'),
-    (KILOGRAM, 'KG'),
-    (LITER, 'LT'),
+    (UNIT, 'unit'),
+    (BAG, 'bag'),
+    (BOX, 'box'),
+    (CAN, 'can'),
+    (CARTON, 'carton'),
+    (JAR, 'jar'),
+    (PACKAGE, 'package'),
+    (GRAM, 'g'),
+    (KILOGRAM, 'kg'),
+    (LITER, 'liter'),
 ]  
+
 
 class FoodForm(forms.Form):  
 
@@ -50,12 +51,14 @@ class FoodForm(forms.Form):
         # default=UNIT
         )
     date_purchased = forms.DateField(
-        required=False,
-        # auto_now=False,
-        # auto_now_add=False,
-        # default=now
+        input_formats=['%Y-%m-%d'],
+        # attrs={'id': 'date_purchased'}
+        # widget=FengyuanChenDatePickerInput()
         )
+        
     date_expiry = forms.DateField(
+        input_formats=['%Y-%m-%d'],
+        # attrs={'id': 'date_expiry'}
         # required=False,
         # auto_now=False, 
         # auto_now_add=False,
@@ -67,6 +70,8 @@ class FoodForm(forms.Form):
         # default=FRESH,
         )
     use_before = forms.DateField(
+        input_formats=['%Y-%m-%d'],
+        # attrs={'id': 'use_before'}
         # required=False,
         # auto_now=False, 
         # auto_now_add=False,
