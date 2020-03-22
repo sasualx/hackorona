@@ -6,8 +6,14 @@
   <head><title>Fridge Manager</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Fengyuan Chen's Datepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
     .w3-bar-block .w3-bar-item {padding:20px}
@@ -18,47 +24,149 @@
 
   <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button">×</a>
-    <a href="#food" onclick="w3_close()" class="w3-bar-item w3-button">Food</a>
-    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
+    <a href="javascript:void(0)" class="w3-bar-item w3-button" onclick="document.getElementById('add_item').style.display='block'">Add New Item <i class="w3-padding fa fa-pencil"></i></a>
+    <a href="#food" onclick="w3_close()" class="w3-bar-item w3-button">My Items</a>
+    <a href="javascript:void(0)" class="w3-bar-item w3-button" onclick="document.getElementById('about').style.display='block'">About Us</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'logout' %}" class="w3-bar-item w3-button">Log out</a>
+    {% else %}
+      <a href="{% url 'login' %}" class="w3-bar-item w3-button">Log in</a> / <a href="{% url 'signup' %}" class="w3-bar-item w3-button">Register</a>
+    {% endif %}
+    <!-- <a href="#register" onclick="w3_close()" class="w3-bar-item w3-button">Register</a> -->
   </nav>
 
   <div class="w3-top">
     <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
       <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
-      <div class="w3-right w3-padding-16">About</div>
+      <div class="w3-right w3-padding-16">About Us</div>
       <div class="w3-center w3-padding-16">Fridge Manager</div>
+      
+    </div>
+  </div>
+
+
+
+  <div id="add_item" class="w3-modal" style="z-index: 4; display: none;">
+    <div class="w3-modal-content w3-animate-zoom w3-padding">
+      <span onclick="document.getElementById('add_item').style.display='none'" class="w3-button w3-right w3-xlarge"><i class="fa fa-remove"></i></span>
+
+      {% block content %}
+        <div class="w3_panel">
+          <h3>Add item</h3>
+        </div>
+        
+
+        {% if success %}
+          <p class="success">
+            Added
+          </p>
+
+        {% else %}
+        <div>
+        <form action="" method="post">
+
+            <div class="w3-row-padding w3-margin-bottom" style="margin:0 -16px;">
+              <label for="name">Item</label><br>
+            {{ form.name }}
+              <br>
+            </div>
+
+            <div class="w3-row-padding w3-margin-bottom" style="margin:0 -16px;">
+              <label for="number">Amount    </label><br>
+              {{ form.number }}
+              {{ form.unit }}
+            </div>
+
+            <div class="w3-row-padding w3-margin-bottom" style="margin:0 -16px;">
+              <label for="date_purchased">Date purchased</label><br>
+                {{ form.date_purchased }}
+            </div>
+            
+            <div class="w3-row-padding w3-margin-bottom" style="margin:0 -16px;">
+              <label for="use_before">I plan to use it by</label><br>
+              {{form.use_before}}
+            </div>
+
+            <div class="w3-row-padding w3-margin-bottom" style="margin:0 -16px;">
+              <label for="date_expiry">Expiration date</label><br>
+              <div>
+                {{ form.date_expiry }}
+              </div>
+            </div>
+
+            <div class="w3-row-padding w3-margin-bottom" style="margin:0 -16px;">
+              <label for="freshness">Freshness status</label><br>
+              {{form.status}}
+            </div>
+            
+            <input type="submit" value="Submit">
+
+          {% csrf_token %}
+        </form>
+        </div>
+        {% endif %}
+        {% endblock content %}
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="register" class="w3-modal" style="z-index: 4; display: none;">
+    <div class="w3-modal-content w3-animate-zoom w3-padding">
+      <span onclick="document.getElementById('register').style.display='none'" class="w3-button w3-right w3-xlarge"><i class="fa fa-remove"></i></span>
+
+        {% block content2 %}
+          <h2>Sign up</h2>
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Sign up</button>
+          </form>
+        {% endblock %}
+
     </div>
   </div>
 
   <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
 
     <!-- First Photo Grid-->
-    <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+    <div class="w3-row-padding w3-padding-16 w3-center" id="food">     
 
       {% for item in items %}
         <div class="w3-quarter">
-          {% if item.name == 'Apple' %}
-          <img src='{% static "/apple.jpg" %}' alt='{% static "/apple.jpg" %}' width='200px' />
+          {% if item.name == 'Apple' or item.name == 'apple' %}
+          <img src='{% static "/apple.jpg" %}' alt='apple' height='200px' />
+          {% elif item.name == 'Avocado' or item.name == 'avocado'%}
+          <img src='{% static "/avocado.jpg" %}' alt='avocado' height='200px' />
+          {% elif item.name == 'Blueberry' or item.name == 'blueberry' %}
+          <img src='{% static "/blueberry.jpg" %}' alt='blueberry' height='200px' />
+          {% elif item.name == 'Coffee beans' or item.name == 'coffee beans' %}
+          <img src='{% static "/coffee_beans.jpg" %}' alt='coffee beans' height='200px' />
+          {% elif item.name == 'Milk' or item.name == 'milk' %}
+          <img src='{% static "/milk.jpg" %}' alt='milk' height='200px' />
+          {% elif item.name == 'Orange' or item.name == 'orange' %}
+          <img src='{% static "/orange.jpg" %}' alt='orange' height='200px' />
+          {% elif item.name == 'Red wine' or item.name == 'red wine' %}
+          <img src='{% static "/red_wine.jpg" %}' alt='red wine' height='200px' />
+          {% elif item.name == 'Spaghetti' or item.name == 'spaghetti' %}
+          <img src='{% static "/spaghetti.jpg" %}' alt='spaghetti' height='200px' />
+          {% elif item.name == 'Sugar' or item.name == 'sugar' %}
+          <img src='{% static "/sugar.jpg" %}' alt='sugar' height='200px' />
+
           {% endif %}
           <h2>{{item.name}}</h2>
           <p>{{item.number}} {{item.unit}}</p>
           <p>Status: {{item.status}}</p>
           <p>Use before: {{item.use_before}}</p>
+          <p>Expiry date: {{item.date_expiry}}</p>
+          <p>Date of purchase: {{item.date_purchased}}</p>
+          <form action="" method="get">
+            <button class = "btn btn-default" name="DeleteButton" value="{{ item.id }}">Already used</button>
+          </form>
         </div>
       {% endfor %}
-     <div class="w3-quarter">
-          <h2>{{item.name}}</h2>
-          <p>{{item.number}} {{item.unit}}</p>
-          <p>Status: {{item.status}}</p>
-          <p>Use before: {{item.use_before}}</p>
-        </div>
     </div>
-    <form action="/your-name/" method="post">
-        <label for="item_name">Item Name: </label>
-        <input id="item_name" type="text" name="item_name">
-        <input id="best_until" type="text" name="best_until">
-        <input type="submit" value="OK">
-    </form>
     
     <!-- Second Photo Grid-->
     <div class="w3-row-padding w3-padding-16 w3-center">
@@ -77,25 +185,22 @@
     </div>
   
     <!-- Pagination -->
-    <div class="w3-center w3-padding-32">
+    <!-- <div class="w3-center w3-padding-32">
       <div class="w3-bar">
         <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
         <a href="#" class="w3-bar-item w3-black w3-button">1</a>
-        <!-- <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
         <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a> -->
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
         <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
       </div>
-    </div>
+    </div> -->
 
     <!-- Footer -->
-    <footer class="w3-row-padding w3-padding-32">
-      <div class="w3-bottom">
-        <h3>@</h3>
-        <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-      </div>
-    
+    <footer class="w3-row-padding w3-padding-16 w3-center w3-light-grey ">
+        <h3>Fridge Manager</h3>
+        <p>@WirVsVirus</p>
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p> 
     </footer>
   
   <!-- End page content -->
@@ -117,6 +222,23 @@
     document.getElementById("mySidebar").style.display = "none";
   }
 
+  $(function () {
+    $("#id_date_purchased").datepicker({
+      format:'yyyy-mm-dd',
+    });
+  });
+
+  $(function () {
+    $("#id_date_expiry").datepicker({
+      format:'yyyy-mm-dd',
+    });
+  });
+
+  $(function () {
+    $("#id_use_before").datepicker({
+      format:'yyyy-mm-dd',
+    });
+  });
 </script>
 
   {% render_bundle 'main' %}

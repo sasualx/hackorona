@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now, timedelta
+from django.forms import ModelForm
 
 class Food(models.Model):
 
@@ -14,6 +15,7 @@ class Food(models.Model):
 
     UNIT = 'unit(s)'
     BAG = 'bag(s)'
+    BOTTLE = 'bottle(s)'
     BOX = 'box(s)'
     CAN = 'can(s)'
     CARTON = 'carton(s)'
@@ -26,6 +28,7 @@ class Food(models.Model):
     UNIT_CHOICES = [
         (UNIT, 'UN'),
         (BAG, 'BG'),
+        (BOTTLE, 'BT'),
         (BOX, 'BX'),
         (CAN, 'CN'),
         (CARTON, 'CA'),
@@ -71,5 +74,6 @@ class Food(models.Model):
         auto_now_add=False,
         default=now()+timedelta(days=7),
         )
+
 
 # Create your models here.
