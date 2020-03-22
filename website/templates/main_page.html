@@ -38,9 +38,7 @@
       {% for item in items %}
         <div class="w3-quarter">
           {% if item.name == 'Apple' %}
-          <img src='{% static "/apple.jpg" %}' />
-          <!-- <img src="{{ MEDIA_URL }}apple.jpg"> -->
-            <!-- <img src="../images/apple.jpg" style="width:100%"> -->
+          <img src='{% static "/apple.jpg" %}' alt='{% static "/apple.jpg" %}' width='200px' />
           {% endif %}
           <h2>{{item.name}}</h2>
           <p>{{item.number}} {{item.unit}}</p>
