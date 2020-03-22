@@ -99,8 +99,19 @@
           <p>Use before: {{item.use_before}}</p>
         </div>
       {% endfor %}
-
+     <div class="w3-quarter">
+          <h2>{{item.name}}</h2>
+          <p>{{item.number}} {{item.unit}}</p>
+          <p>Status: {{item.status}}</p>
+          <p>Use before: {{item.use_before}}</p>
+        </div>
     </div>
+    <form action="/your-name/" method="post">
+        <label for="item_name">Item Name: </label>
+        <input id="item_name" type="text" name="item_name">
+        <input id="best_until" type="text" name="best_until">
+        <input type="submit" value="OK">
+    </form>
     
     <!-- Second Photo Grid-->
     <div class="w3-row-padding w3-padding-16 w3-center">
