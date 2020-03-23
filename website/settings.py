@@ -138,5 +138,5 @@ LOGIN_REDIRECT_URL = 'main_page'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "assets"),
+    os.path.join(BASE_DIR, "static/assets"),
 ]
