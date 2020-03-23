@@ -17,13 +17,20 @@ class FoodView(TemplateView):
     template  = 'main_page.html'
 
     def get(self, request):
+
+        if request.user.is_authenticated:
         context = {
             'items': request.user.food_set.all(),
             'form': FoodForm()
         }
 
+
         if (request.GET.get('DeleteButton')):
             request.user.food_set.filter(id = request.GET.get('DeleteButton')).delete()
+
+        else:
+            context = {
+            }
 
         return render(request, self.template, context)
 
